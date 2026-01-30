@@ -5,35 +5,26 @@ const consultarTodos = async ()=> {
     return data;
 }
 
-export async function consultarTodosFacade(){
-    return await consultarTodos();
-}
 
-const consultarPorId = async () => {
+const consultarPorId = async (id) => {
     const data = axios.get(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`).then(r=>r.data)
     return data;
 }
 
 const guardar = async (body) => {
-    /*const objeto = {
-        nombre:'John',
-        apellido:'Andino'
-    };*/
+   
     axios.post(`http://localhost:8081/matricula/api/v1.0/estudiantes`,body).then(r=>r.data);
-    console.log(data);
-    return data;
+    
 } 
 
 const actualizar = async (id, body) =>{
     axios.put(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`,body).then(r=>r.data);
-    console.log(data);
-    return data;
+   
 }
 
 const actualizarParcial = async (id, body) =>{
     axios.patch(`http://localhost:8081/matricula/api/v1.0/estudiantes/${id}`,body).then(r=>r.data);
-    console.log(data);
-    return data;
+  
 }
 
 const borrar = async (id) => {
@@ -45,8 +36,8 @@ export const consultarTodosFachada = async ()=>{
     return await consultarTodos();
 }
 
-export const consultarPorIdFachada = async () => {
-    return await consultarPorId();
+export const consultarPorIdFachada = async (id) => {
+    return await consultarPorId(id);
 }
 
 export const guardarFachada = async (body) => {
