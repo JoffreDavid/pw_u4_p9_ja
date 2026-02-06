@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL= "http://localhost:8082/auth/api/v1.0/usuarios/token?user=xinneth&password=123"
+const URL= "http://localhost:8082/auth/api/v1.0/usuarios/token?user=laiger&password=123"
 
 const obToken= async () => {
     const token = await axios.get(`${URL}`).then(r => r.data);

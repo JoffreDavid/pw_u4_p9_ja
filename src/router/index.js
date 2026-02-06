@@ -6,12 +6,23 @@ import GuardarEstView from '../views/GuardarEstView.vue'
 import BorrarView from '../views/BorrarView.vue'
 import ActualizarView from '../views/ActualizarView.vue'
 import ActualizarPView from '../views/ActualizarPView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
+   {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    meta: {
+      requiereAutorizacion: true,
+      esPublica: false
+    }
+    
   },
   {
     path: '/about',
@@ -19,7 +30,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue'),
+    meta: {
+      requiereAutorizacion: true,
+      esPublica: false
+    }
   },
   {
     path: '/consultar',      
@@ -56,6 +71,26 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+	if (to.meta.requiereAutorizacion) {
+		const estaAutenticado = localStorage.getItem("estaAutenticado");
+		const token = localStorage.getItem("token");
+
+		if (! estaAutenticado) {
+			console.log("Redirigiendo al Login");
+			next({name: 'login'})
+		} else {
+			next();
+		}
+
+		/*Le envio a una página de login*/
+	} else {
+		console.log("Pase Libre")
+		next();
+		/*Le dejo que pase sin autenticación*/
+	}
 })
 
 export default router
